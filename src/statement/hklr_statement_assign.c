@@ -58,6 +58,10 @@ void hklr_statement_assign(HklrExpression* lhs, HklrExpression* rhs)
       object->as.string = hkl_string_new_from_string(value->as.string);
     break;
 
+    case HKL_TYPE_ARRAY:
+      object->type = value->type;
+      object->as.deque = value->as.deque;
+
     default:
     break;
   }

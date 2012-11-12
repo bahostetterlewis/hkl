@@ -47,7 +47,7 @@ HklrObject* hklr_object_new(HklType type, HklFlag flags, ...)
       object->as.string = va_arg(argp, HklString*);
     break;
 
-    default: 
+    default:
       assert(false);
     break;
   }
@@ -77,7 +77,11 @@ HklValue* hklr_object_dereference(HklrObject* object)
 
     case HKL_TYPE_STRING:
       return hkl_value_new(HKL_TYPE_STRING, hkl_string_new_from_string(object->as.string));
-    break;    
+    break;
+
+    case HKL_TYPE_ARRAY:
+      return hkl_value_new(HKL_TYPE_ARRAY, object->as.deque);
+    break;
 
     default:
       assert(false);

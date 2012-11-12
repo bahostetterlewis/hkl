@@ -96,9 +96,10 @@ void hkl_deque_push_front(HklDeque* deque, void* data)
   if(deque->size > 0)//normal case insert
   {
     //since negative mods fuck up in c we need to use a
-    //congruent number obtained by adding the max to the front
+    //congruent number obtained by adding the max-1 to the front
     //before modding
-    //front - 1 (==) (front + (max - 1))(mod max)
+    //formula
+    //front - 1 ≡ (front + (max - 1)) (mod max)
     deque->front = (deque->front + (deque->max - 1)) % deque->max;
     deque->queue[deque->front] = data;
   }
@@ -178,6 +179,7 @@ void hkl_deque_clear(HklDeque* deque)
   deque->queue = malloc(sizeof(void*));
 }
 
+#include <stdio.h>
 void *hkl_deque_findn(HklDeque *deque, int n)
 {
   assert(deque != NULL);

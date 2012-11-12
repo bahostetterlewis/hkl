@@ -5,6 +5,7 @@
 
 #include "hkl_string.h"
 #include "hkl_hash.h"
+#include "hkl_deque.h"
 
 typedef enum HklColor
 {
@@ -49,7 +50,7 @@ typedef enum HklType
 /**
 @struct HklrObject The top-level object used by the HKLR
 
-@authors Barrett Lewis, Scott LaVigne 
+@authors Barrett Lewis, Scott LaVigne
 @date 10/8/2012
 */
 typedef struct HklrObject {
@@ -70,8 +71,9 @@ typedef struct HklrObject {
     double             real;
     HklString*         string;
     HklHash*           hash;
+    HklDeque*          deque;
     struct HklrObject* object;
-  
+
   } as;
 
 } HklrObject;

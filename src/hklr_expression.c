@@ -17,6 +17,7 @@ extern HklValue* hklr_op_multiply(HklValue* left_value, HklValue* right_value);
 extern HklValue* hklr_op_divide(HklValue* left_value, HklValue* right_value);
 extern HklValue* hklr_op_not_equal(HklValue* left_value, HklValue* right_value);
 extern HklValue* hklr_op_equal(HklValue* left_value, HklValue* right_value);
+extern HklValue* hklr_op_index(HklValue* array, HklValue* index);
 
 HklrExpression* hklr_expression_new(HklExpressionType type, ...)
 {
@@ -209,6 +210,9 @@ HklValue* hklr_expression_eval(HklrExpression* expr)
           break;
         case HKL_OP_EQUAL:
           result = hklr_op_equal(left_value, right_value);
+          break;
+        case HKL_OP_INDEX:
+          result = hklr_op_index(left_value, right_value);
           break;
         default:
           assert(false);
