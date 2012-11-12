@@ -55,7 +55,7 @@ HklrExpression* hklr_expression_new(HklExpressionType type, ...)
       expr->arg[0].op = va_arg(argp, HklOperatorType);
       expr->arg[1].expression = va_arg(argp, HklrExpression*);
       break;
-      
+
     case HKL_EXPR_BINARY:
       expr->arg[0].expression = va_arg(argp, HklrExpression*);
       expr->arg[1].op = va_arg(argp, HklOperatorType);
@@ -75,7 +75,8 @@ static void hklr_array_add_list(void* expr, void* array)
 {
   HklValue* value = hklr_expression_eval((HklrExpression*) expr);
 
-  hkl_deque_push_back((HklDeque*) array, value);
+  //parsed backwards for some reason?
+  hkl_deque_push_front((HklDeque*) array, value);
 }
 
 HklValue* hklr_expression_eval(HklrExpression* expr)
@@ -100,7 +101,7 @@ HklValue* hklr_expression_eval(HklrExpression* expr)
       return hkl_value_new(HKL_TYPE_REAL, expr->arg[0].real);
       break;
 
-    case HKL_EXPR_STRING: 
+    case HKL_EXPR_STRING:
     {
       HklString* string = hkl_string_new_from_string(expr->arg[0].string);
       assert(string != NULL);
@@ -190,18 +191,18 @@ HklValue* hklr_expression_eval(HklrExpression* expr)
           break;
         case HKL_OP_LESS:
           result = hklr_op_less(left_value, right_value);
-          break;  
+          break;
         case HKL_OP_LESS_EQUAL:
           result = hklr_op_less_equal(left_value, right_value);
-          break;   
+          break;
         case HKL_OP_GREATER:
           result = hklr_op_greater(left_value, right_value);
-          break;  
+          break;
         case HKL_OP_GREATER_EQUAL:
           result = hklr_op_greater_equal(left_value, right_value);
           break;
-        case HKL_OP_ASTERISK: 
-          result = hklr_op_multiply(left_value, right_value); 
+        case HKL_OP_ASTERISK:
+          result = hklr_op_multiply(left_value, right_value);
           break;
         case HKL_OP_DIVIDE:
           result = hklr_op_divide(left_value, right_value);

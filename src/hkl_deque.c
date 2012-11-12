@@ -85,7 +85,6 @@ void hkl_deque_push_back(HklDeque* deque, void* data)
   ++deque->size;
 }
 
-
 void hkl_deque_push_front(HklDeque* deque, void* data)
 {
   assert(deque != NULL);
@@ -94,13 +93,16 @@ void hkl_deque_push_front(HklDeque* deque, void* data)
   {
     hkl_deque_grow(deque);
   }
-
   if(deque->size > 0)//normal case insert
   {
-    deque->front = (deque->front - 1) % deque->max;
+    //since negative mods fuck up in c we need to use a
+    //congruent number obtained by adding the max to the front
+    //before modding
+    //front - 1 (==) (front + (max - 1))(mod max)
+    deque->front = (deque->front + (deque->max - 1)) % deque->max;
     deque->queue[deque->front] = data;
   }
-  else//special case of empty tree
+  else//special case of empty queue
   {
     deque->queue[0] = data;
   }
